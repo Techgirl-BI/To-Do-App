@@ -6,6 +6,7 @@ import mongoose from "mongoose"
 const app = express()
 //parse data into json format
 app.use(express.json())
+app.use(morgan())
 
 const {ENV,PORT} = process.env
 //port
