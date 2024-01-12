@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 import morgan from 'morgan'
 import httpStatus from 'http-status'
-import { dbConnect } from './config/db.js'
+import { dbConnect } from '../config/db.js'
 
 const app = express()
 const {NODE_ENV, PORT} = process.env
@@ -31,7 +31,7 @@ if(error) {
   console.log("server error", error);
   return
 }
-console.log("app is listening");
+console.log(`app is listening on port ${port}`);
   })
 }).catch((error) => {
   console.log(`database error, ${error}`);
