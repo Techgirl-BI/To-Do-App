@@ -25,7 +25,7 @@ app.get('/', (req,res) => {
     res.status(httpStatus.OK)
     .json({
       status: "success",
-      message: "Welcome to my to-do application"
+      message: "Welcome to my to-do application, glad to have you here"
     })
   } catch (error) {
     console.log(error.message)
