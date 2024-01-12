@@ -1,14 +1,38 @@
-import express from "express"
-import dotenv from "dotenv"
+import express from 'express'
+import dotenv from 'dotenv'
 dotenv.config()
-import mongoose from "mongoose"
+import morgan from 'morgan'
+import httpStatus from 'http-status'
+import { dbConnect } from './config/db.js'
 
 const app = express()
-//parse data into json format
-app.use(express.json())
-app.use(morgan())
+const {NODE_ENV, PORT} = process.env
+if(NODE_ENV === "development") {
+  app.use(morgan('dev'))
+}
+app.get('/', (req,res) => {
+  try {
+    res.status(httpStatus.OK)
+    .json({
+      status: "success",
+      message: "Welcome to my to-do app"
+    })
+  } catch (error) {
+    console.log(error.message)
+res.status(httpStatus[404]).send(error.message)
+  }
+})
 
-const {ENV,PORT} = process.env
-//port
-const port = ENV === "development"? PORT : 6000
-app.listen(()=> console.log( `App is listening on ${port}`))
+dbConnect().then(() => {
+  console.log("Database is connected")
+  const port = NODE_ENV === "development"? PORT : 7070
+  app.listen(port, (error) => {
+if(error) {
+  console.log("server error", error);
+  return
+}
+console.log("app is listening");
+  })
+}).catch((error) => {
+  console.log(`database error, ${error}`);
+})
