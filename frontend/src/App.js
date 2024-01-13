@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import axios from "axios"
 function App() {
   const [itemText, setItemText] = useState('')
@@ -10,8 +10,19 @@ function App() {
  } catch (error) {
   console.log(error);
  }
-
   }
+useEffect(()=>{
+  const getAllItems  = async () => {
+    try {
+const res = await axios.get("https://to-do-app-v0rt.onrender.com/tasks")
+console.log(res)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  getAllItems()
+}, [])
+
   return (
     <div className="flex flex-col items-center bg-gray-100 p-4">
       {/* Header */}
