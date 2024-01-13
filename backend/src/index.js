@@ -14,14 +14,6 @@ const {NODE_ENV, PORT} = process.env
 if(NODE_ENV === "development") {
   app.use(morgan('dev'))
 }
-
-app.use('/tasks', taskRouter)
-// app.all('*', (req,res)=> {
-//   res.status(httpStatus.NOT_FOUND).json({
-//     status: "error",
-//     payload: "endpoint not defined"
-//   })
-// })
 app.get('/', (req,res) => {
   try {
     res.status(httpStatus.OK)
@@ -33,6 +25,13 @@ app.get('/', (req,res) => {
     console.log(error.message)
 res.status(httpStatus[404]).send(error.message)
   }
+})
+app.use('/tasks', taskRouter)
+app.all('*', (req,res)=> {
+  res.status(httpStatus.NOT_FOUND).json({
+    status: "error",
+    payload: "endpoint not defined"
+  })
 })
 
 dbConnect().then(() => {
