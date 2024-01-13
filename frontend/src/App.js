@@ -2,7 +2,8 @@ import {useState} from 'react'
 import axios from "axios"
 function App() {
   const [itemText, setItemText] = useState('')
-  const addItem = async () => {
+  const addItem = async (e) => {
+    e.preventDefault()
  try {
   const res = await axios.post("https://to-do-app-v0rt.onrender.com/tasks", {item:itemText})
   console.log(res);
@@ -17,7 +18,7 @@ function App() {
       <h1 className="text-2xl font-bold text-center my-4">TO DO APP</h1>
 
       {/* Add Task section */}
-      <div className="flex items-center gap-4 w-full">
+      <form onSubmit={(e) => addItem(e)} className="flex items-center gap-4 w-full">
         <input
           type="text"
           placeholder="Add a task"
@@ -31,7 +32,7 @@ function App() {
         >
           +
         </button>
-      </div>
+      </form>
 
       {/* Todo List section */}
       <section className="mt-8">
